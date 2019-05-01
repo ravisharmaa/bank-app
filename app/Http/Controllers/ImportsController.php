@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use League\Csv\Reader;
+use Symfony\Component\HttpKernel\Exception\UnsupportedMediaTypeHttpException;
 
 class ImportsController extends Controller
 {
@@ -16,18 +17,20 @@ class ImportsController extends Controller
         return view('imports.index');
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function store()
     {
-        $csvData = array_map(function ($file) {
+        array_map(function ($file) {
             if ('csv' === $file->getClientOriginalExtension()) {
-                return Reader::createFromFileObject($file->openFile())->setHeaderOffset(0);
+                foreach (Reader::createFromFileObject($file->openFile())->setHeaderOffset(0) as $index => $row) {
+                    return Demo::create($row);
+                }
             }
-
-            return false;
+            throw new UnsupportedMediaTypeHttpException('Cannot process with your request');
         }, request()->file());
 
-        foreach ($csvData as $index => $row) {
-            dump($row[1]);
-        }
+        return redirect('/');
     }
 }
