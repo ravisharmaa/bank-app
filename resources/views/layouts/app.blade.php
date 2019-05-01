@@ -31,7 +31,9 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-    @include('components.sidebar')
+    @if ( auth()->check())
+        @include('components.sidebar')
+    @endif
     <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -40,7 +42,9 @@
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-            @include('components.nav')
+            @if ( auth()->check())
+             @include('components.nav')
+            @endif
             <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -53,7 +57,9 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
+        @if ( auth()->check())
         @include('components.footer')
+        @endif
         <!-- End of Footer -->
 
         </div>

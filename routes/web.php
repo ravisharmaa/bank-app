@@ -11,11 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
-
-Route::get('/', 'DashboardController@index');
-Route::resource('imports','ImportsController');
+Route::get('/', 'DashboardController@index')->middleware('auth');
+Route::resource('imports','ImportsController')->middleware('auth');

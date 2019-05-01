@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Student;
 use League\Csv\Reader;
 use Symfony\Component\HttpKernel\Exception\UnsupportedMediaTypeHttpException;
 
 class ImportsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         return view('imports.index');
@@ -25,7 +21,7 @@ class ImportsController extends Controller
         array_map(function ($file) {
             if ('csv' === $file->getClientOriginalExtension()) {
                 foreach (Reader::createFromFileObject($file->openFile())->setHeaderOffset(0) as $index => $row) {
-                    return Demo::create($row);
+                    return Student::create($row);
                 }
             }
             throw new UnsupportedMediaTypeHttpException('Cannot process with your request');
