@@ -6,7 +6,8 @@
  */
 
 require('./bootstrap');
-
+require('./template/template')
+require('./template/jquery.easing')
 window.Vue = require('vue');
 
 /**

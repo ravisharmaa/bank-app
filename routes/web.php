@@ -18,4 +18,4 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/', 'DashboardController@index');
-Route::get('import','ImportsController@index')->name('import.index');
+Route::resource('imports','ImportsController');
